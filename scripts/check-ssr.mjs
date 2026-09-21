@@ -19,7 +19,7 @@
  * because "the gate passed" must not be able to mean "the gate looked at two pages".
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -47,6 +47,16 @@ function htmlFiles(dir) {
 
 const files = htmlFiles(APP_OUT);
 
+/**
+ * Next prerenders `/_global-error` as its own client 500 shell
+ * (`html id="__next_error__"`). `src/app/global-error.tsx` is a client boundary —
+ * Next requires that — so it cannot put language or a `<main>` into that file.
+ * It is not a public page. Skip it, and say so, rather than fail the product gate.
+ */
+const SKIP = new Set(["_global-error.html"]);
+const skipped = files.filter((file) => SKIP.has(basename(file)));
+const inspected = files.filter((file) => !SKIP.has(basename(file)));
+
 if (files.length === 0) {
   console.error(
     [
@@ -56,6 +66,13 @@ if (files.length === 0) {
       "portal is replacing. Make the page a server component, or give its dynamic",
       "segment a generateStaticParams.",
     ].join("\n")
+  );
+  process.exit(1);
+}
+
+if (inspected.length === 0) {
+  console.error(
+    "Every prerendered HTML file was a skipped Next error shell. No public page was inspected."
   );
   process.exit(1);
 }
@@ -72,7 +89,7 @@ const textOf = (html) =>
 
 const problems = [];
 
-for (const file of files) {
+for (const file of inspected) {
   const rel = relative(ROOT, file);
   const html = readFileSync(file, "utf8");
 
@@ -113,11 +130,16 @@ if (problems.length) {
 }
 
 console.log(
-  `SSR check passed — ${files.length} prerendered page${files.length === 1 ? "" : "s"} carry their content in the server HTML.`
+  `SSR check passed — ${inspected.length} prerendered page${inspected.length === 1 ? "" : "s"} carry their content in the server HTML.`
 );
+if (skipped.length) {
+  console.log(
+    `  Skipped ${skipped.length} Next error shell${skipped.length === 1 ? "" : "s"} (${skipped.map((f) => basename(f)).join(", ")}): client boundary, not a public page.`
+  );
+}
 if (declared) {
   console.log(
-    `  Coverage: ${files.length} of ${declared} routes in the build manifest are prerendered.\n` +
+    `  Coverage: ${inspected.length} of ${declared} routes in the build manifest are prerendered.\n` +
       "  Routes rendered on demand are not inspected here; add generateStaticParams to bring one in."
   );
 }

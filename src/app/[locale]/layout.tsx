@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import { Noto_Sans_Malayalam } from "next/font/google";
 import { notFound } from "next/navigation";
 
-import "../app.css";
 import { DEFAULT_LOCALE, HTML_LANG, LOCALES, isLocale } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
 
 /**
- * This is the root layout. There is deliberately no `src/app/layout.tsx` above it:
- * `<html lang>` has to be decided per locale, and it has to be decided on the server.
+ * Locale layout: the only place `<html lang>` is set. The pass-through at
+ * `src/app/layout.tsx` exists for recovery pages that never enter this tree.
  *
  * The portal being replaced sets `lang` from a `useEffect`, so every page it serves is
  * `lang="en"` no matter which language the reader chose. A screen reader announcing

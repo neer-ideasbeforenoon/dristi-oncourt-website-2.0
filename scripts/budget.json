@@ -1,5 +1,5 @@
 {
-  "_comment": "First-load JavaScript ceilings, in UNCOMPRESSED bytes, as Next reports them in .next/diagnostics/route-bundle-stats.json. Raising a number here is a visible diff someone has to justify, which is the point. The portal being replaced shipped ~225 KB gzipped on its homepage, roughly 40 KB of which was legacy polyfill, to render a spinner.",
-  "defaultFirstLoadUncompressedBytes": 500000,
+  "_comment": "First-load JavaScript ceilings, in UNCOMPRESSED bytes, as Next reports them in .next/diagnostics/route-bundle-stats.json. Raising a number here is a visible diff someone has to justify, which is the point. The portal being replaced shipped ~225 KB gzipped on its homepage, roughly 40 KB of which was legacy polyfill, to render a spinner. 540000 is the Next 16.2 / React 19 client floor measured on 2026-09-21 against an empty server page (522 KB on /[locale], 518 KB on /_not-found). It is not a gift; a new client island still has to fit under it.",
+  "defaultFirstLoadUncompressedBytes": 540000,
   "routes": {}
 }
