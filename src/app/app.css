@@ -1,0 +1,19 @@
+/*
+ * The stylesheet the app actually imports.
+ *
+ * Two lines, and the order is the whole point:
+ *
+ *   globals.css      the design system, synced byte-for-byte from the pinned DS.
+ *                    check:ui-sync fails if a single character differs, so nothing
+ *                    local can ever be written into it.
+ *   portal-tokens.css  this repo's own additions, --portal-* only, enforced by
+ *                    check:portal-tokens.
+ *
+ * Keeping them in separate files is what lets the first one stay verifiably untouched
+ * while the second one is free to grow. Importing globals.css directly from layout.tsx
+ * would work today and quietly invite someone to "just add one variable" to it.
+ *
+ * Do not add anything else to this file.
+ */
+@import "./globals.css";
+@import "./portal-tokens.css";

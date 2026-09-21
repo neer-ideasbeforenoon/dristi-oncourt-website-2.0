@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Gates that only run when someone remembers to run them are not gates.
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # postinstall clones the pinned design system into vendor/.
+      # If pucardotorg/dristi-design-system is private, this needs a token with read
+      # access to it. Add it as a repository secret named DS_TOKEN and uncomment:
+      #
+      # - name: Allow the DS clone
+      #   run: git config --global url."https://x-access-token:${{ secrets.DS_TOKEN }}@github.com/".insteadOf "https://github.com/"
+      - name: Install
+        run: npm ci
+
+      # Must come first. Every other DS gate compares against whatever is in vendor/,
+      # so they all pass green on the wrong version. This is the one that catches that.
+      - name: Design system is the pinned one
+        run: npm run check:ds-fresh
+
+      # --strict: an unverifiable docs/ds/ snapshot fails in CI, where it can never be
+      # "I just have not installed yet".
+      - name: Pinned DS rules are unmodified
+        run: node scripts/check-ds-docs.mjs --strict
+
+      - name: Lint and source gates
+        run: npm run lint
+
+      # Build, then the gates that read the build: server rendering and JS weight.
+      - name: Build and ship gates
+        run: npm run check:ship

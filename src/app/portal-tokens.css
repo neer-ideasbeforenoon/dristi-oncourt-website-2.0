@@ -1,0 +1,64 @@
+/*
+ * Portal token layer — this repo's own additions to the design system.
+ *
+ * RULES (enforced by `npm run check:portal-tokens`):
+ *   1. Never redefine a name the DS already owns. That forks the brand between this
+ *      portal and the Dristi app, which is the one thing this repo exists to prevent.
+ *   2. Every name here is --portal-*, so a later promotion into the DS is one grep.
+ *   3. Custom properties only. No @theme, no @apply, no ordinary CSS properties.
+ *      (A second stylesheet cannot register Tailwind theme tokens — only the entry
+ *      holding `@import "tailwindcss"` emits utilities — so an @theme block here would
+ *      be silently dead.)
+ *
+ * Consume these as `var(--portal-x)`, or in an arbitrary value like
+ * `max-w-[var(--portal-measure)]`. The DS token gates deliberately permit `var()`
+ * inside arbitrary values, so that stays legal.
+ *
+ * WHAT DOES NOT BELONG HERE: the brand. The portal defines no teal. `--primary`
+ * resolves to #007e7e in light and #0eb39e in dark, from the pinned DS, exactly as the
+ * Dristi app gets it. If you find yourself wanting a colour here, you almost certainly
+ * want a DS semantic token instead — and if the DS genuinely lacks one, that is a
+ * request in docs/design/ds-requests.md, not a local hex.
+ *
+ * Anything added here that turns out to be product-general should be promoted upstream.
+ * The DS has an established pattern for that; see the "Promote from Dristi" commit in
+ * its history.
+ */
+
+:root {
+  /*
+   * Reading measure. The DS type scale is tuned for dense authenticated case tables;
+   * this portal is mostly prose, notices and FAQs, which need a line length a person
+   * can actually track. ~68 characters at the DS body size.
+   */
+  --portal-measure: 34rem;
+
+  /* Long-form line height, looser than the DS's 1.5rem/1rem UI body. */
+  --portal-prose-leading: 1.7;
+
+  /*
+   * Maximum width of a page's content column, distinct from the measure: tables and
+   * cause lists are allowed to be wider than prose.
+   */
+  --portal-content-max: 72rem;
+}
+
+/*
+ * Malayalam script coverage.
+ *
+ * This is the ONE sanctioned redefinition of a design-system token in this repo, and it
+ * is sanctioned by the design system itself: DS ACCESSIBILITY.md section 13 delegates
+ * non-Latin script coverage to the consuming app. There is no dependable Malayalam
+ * system font across Windows, Android and macOS, so the DS's zero-download stack simply
+ * has nothing to fall back to for half this portal's readers.
+ *
+ * Scoped to `[lang^="ml"]`, so English pages keep the DS stack untouched, byte for byte.
+ * The variable is produced by next/font in the root layout.
+ *
+ * This does NOT license a second exception. Anything else you want to override belongs
+ * in docs/design/ds-requests.md.
+ */
+/* portal-tokens-allow */
+:root[lang^="ml"] {
+  --font-sans: var(--portal-font-malayalam), "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+}

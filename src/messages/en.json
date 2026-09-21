@@ -1,0 +1,20 @@
+{
+  "site.name": "ON Courts",
+  "site.tagline": "Kerala judiciary online",
+  "home.title": "ON Courts",
+  "home.description": "Cause lists, case status, notices and certified copies for the courts of Kerala.",
+  "home.heading": "Find your case",
+  "home.intro": "Cause lists, case status, notices and certified copies, for every court on the platform.",
+  "nav.causeList": "Cause list",
+  "nav.caseSearch": "Case search",
+  "nav.notices": "Notices",
+  "nav.certifiedCopies": "Certified copies",
+  "nav.help": "Help",
+  "lang.switch": "Language",
+  "footer.lastUpdated": "Last updated",
+  "notFound.title": "Page not found",
+  "notFound.body": "The page you asked for does not exist. Try the cause list or case search.",
+  "error.title": "Something went wrong",
+  "error.body": "This page could not be loaded. Please try again.",
+  "error.retry": "Try again"
+}

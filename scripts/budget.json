@@ -1,0 +1,5 @@
+{
+  "_comment": "First-load JavaScript ceilings, in UNCOMPRESSED bytes, as Next reports them in .next/diagnostics/route-bundle-stats.json. Raising a number here is a visible diff someone has to justify, which is the point. The portal being replaced shipped ~225 KB gzipped on its homepage, roughly 40 KB of which was legacy polyfill, to render a spinner.",
+  "defaultFirstLoadUncompressedBytes": 500000,
+  "routes": {}
+}

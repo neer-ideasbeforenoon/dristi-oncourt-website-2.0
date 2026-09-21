@@ -1,0 +1,32 @@
+{
+  "_comment": "Written by `npm run sync:ds-docs`. Every file listed is a byte copy of the design system at dsCommit. Never hand-edit anything in docs/ds/ \u2014 `npm run check:ds-docs` compares these hashes and will reject it.",
+  "dsRemote": "pucardotorg/dristi-design-system",
+  "dsCommit": "e0cadea6b9d459bd3c58eed840974c6c610ad624",
+  "files": [
+    {
+      "from": "AGENTS.md",
+      "to": "agents.md",
+      "sha256": "5bb1241bf03c62fc0e6a4350f96c5ce9b3ee2e979d2a7438cebe28c91247e474"
+    },
+    {
+      "from": "ACCESSIBILITY.md",
+      "to": "accessibility.md",
+      "sha256": "df56d70e5331956d04b07b463c75a212644eba18f577eb921b6199530312c238"
+    },
+    {
+      "from": "RESPONSIVE.md",
+      "to": "responsive.md",
+      "sha256": "cc0cee328dac4a9125fa53bd6201f53767844180dc75d752f0bda51e23178630"
+    },
+    {
+      "from": "src/app/(docs)/foundations/laws/page.tsx",
+      "to": "laws.page.tsx",
+      "sha256": "516a57fa26d3fdcc4f661252de9c13328fdc63a36a16e85f95ef1fb99ed4964b"
+    },
+    {
+      "from": "src/app/(docs)/principles/page.tsx",
+      "to": "principles.page.tsx",
+      "sha256": "b596aa2cb3866f566272f08f11ead2cc05740201130ebfef5998cf7ed048c667"
+    }
+  ]
+}

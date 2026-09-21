@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# next
+.next/
+out/
+.tmp/
+
+# env
+.env
+.env*.local
+
+# debug / os
+npm-debug.log*
+.DS_Store
+*.pem
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# ide
+.idea/
+.vscode/
+
+# local design-system clone (fetched by npm install -> vendor/pucar-design-system)
+vendor/pucar-design-system/
