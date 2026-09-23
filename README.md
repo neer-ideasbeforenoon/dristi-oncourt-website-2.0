@@ -121,11 +121,13 @@ build-dependent gate, people stop running gates.
 
 ## Status
 
-**Foundation only.** The gates, the design-system wiring, the bilingual routing and the
-compliance tracking are in place and tested. There are no product pages yet.
+**Foundation, with the shared layout locked.** The gates, the design-system wiring, the
+bilingual routing and the compliance tracking are in place. The page chrome, the
+homepage order, and the destinations are settled in [`docs/ia.md`](docs/ia.md) and are
+the same for every state. The services themselves (a live cause list, search results,
+dashboard figures) are not connected yet.
 
-The routes, content model and information architecture are deliberately unwritten until
-they are known rather than guessed: nobody has done the audience research, and the
-inventory in [`docs/current-site-audit.md`](docs/current-site-audit.md) records what the
-old site *has*, not what this one should be. The docs map lists what is missing on
-purpose, so it does not get filled in with plausible invention.
+The content model is still unwritten on purpose: who writes a notice, who approves it,
+where translated copy comes from. The inventory in
+[`docs/current-site-audit.md`](docs/current-site-audit.md) records what the old site
+has. [`docs/ia.md`](docs/ia.md) records what this one is.

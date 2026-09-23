@@ -103,3 +103,17 @@ inventory.
 
 `check:ds-docs` has three outcomes, never two: PASS, FAIL, and UNVERIFIED when no clone
 is present. UNVERIFIED is never reported as green; `--strict` (used in CI) makes it fail.
+
+## D9 — One layout, one navigation, a state pack for the words  ·  settled 2026-09-23
+
+Kerala, Punjab, and Gujarat share the page chrome, the homepage region order, and
+the destinations in [ia.md](ia.md). A state changes the programme name, the one
+sentence, the languages, the helpline, the sign-in address, and the courts. It does
+not get a different layout.
+
+The public comes to use a service. The homepage opens on today's cause list, then
+log in, then case search. About stays on the page, below those, and in full on its
+own URL.
+
+The header order is `PRIMARY_NAV` in `src/lib/navigation.ts`. Reordering it is a
+change to this decision.
