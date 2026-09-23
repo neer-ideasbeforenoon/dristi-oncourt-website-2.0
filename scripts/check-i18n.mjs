@@ -94,6 +94,19 @@ for (const file of sourceFiles(SRC)) {
   });
 }
 
+/* The error boundary is a client component. It must not import the catalogues,
+   or both languages ship in every page's JavaScript. It reads this slim file
+   instead, and these values have to stay identical to en.json. */
+const recoveryPath = join(ROOT, "src/lib/i18n/recovery.json");
+const recovery = JSON.parse(readFileSync(recoveryPath, "utf8"));
+for (const [key, value] of Object.entries(recovery)) {
+  if (catalogues[base][key] !== value) {
+    problems.push(
+      `src/lib/i18n/recovery.json  "${key}" does not match src/messages/${base}.json`
+    );
+  }
+}
+
 if (problems.length) {
   console.error("i18n check failed:\n");
   for (const p of problems) console.error(`  ${p}`);

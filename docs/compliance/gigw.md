@@ -57,10 +57,14 @@ Everything below needs a page, a decision, or a person, and none exists yet.
 - [ ] Screen-reader access page (the assistive-technology listing GIGW expects)
 - [ ] Text-size controls
 - [ ] Contrast / high-contrast control
-- [ ] Language switcher in the page chrome (the routing exists; the control does not)
-- [ ] "Last updated" stamp on every content page
-- [ ] State emblem / Kerala judiciary lockup, used per the emblem rules
-- [ ] Skip-to-content link (the `<main id="main">` target exists; the link does not)
+- [x] Language switcher in the page chrome. It sits in the utility bar and keeps the
+      current path. It lists English and Malayalam, the only pack so far. Punjab and
+      Gujarat each bring their own pair when that pack exists.
+- [ ] "Last updated" stamp on every content page. The footer slot is reserved in
+      [../ia.md](../ia.md). No date is shown until a page has a real one.
+- [ ] State emblem / judiciary lockup, used per the emblem rules. The identity row
+      has the slot; the artwork does not exist yet.
+- [x] Skip-to-content link, first in the tab order, target `#main`
 
 ### Mandated policy pages (§5.4.3)
 Seven, per the review pass against the lifecycle-management page. Re-confirm the exact

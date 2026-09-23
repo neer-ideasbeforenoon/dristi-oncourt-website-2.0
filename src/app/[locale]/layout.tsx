@@ -61,9 +61,7 @@ export default async function RootLayout({
 
   return (
     <html lang={HTML_LANG[locale]} className={notoMalayalam.variable}>
-      <body className="bg-background text-foreground font-sans antialiased">
-        {children}
-      </body>
+      <body className="bg-background text-foreground font-sans antialiased">{children}</body>
     </html>
   );
 }
