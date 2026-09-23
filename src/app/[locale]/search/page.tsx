@@ -21,6 +21,6 @@ export default async function SearchPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { t } = await readPage(params);
-  return <PageMain title={t["search.heading"]} intro={t["search.intro"]} />;
+  const { locale, t } = await readPage(params);
+  return <PageMain locale={locale} path="/search" t={t} title={t["search.heading"]} intro={t["search.intro"]} />;
 }

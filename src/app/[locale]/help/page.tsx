@@ -21,6 +21,6 @@ export default async function HelpPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { t } = await readPage(params);
-  return <PageMain title={t["help.heading"]} intro={t["help.intro"]} />;
+  const { locale, t } = await readPage(params);
+  return <PageMain locale={locale} path="/help" t={t} title={t["help.heading"]} intro={t["help.intro"]} />;
 }

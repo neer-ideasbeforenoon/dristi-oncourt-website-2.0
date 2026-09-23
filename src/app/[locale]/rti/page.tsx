@@ -21,6 +21,6 @@ export default async function RtiPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { t } = await readPage(params);
-  return <PageMain title={t["rti.heading"]} intro={t["rti.intro"]} />;
+  const { locale, t } = await readPage(params);
+  return <PageMain locale={locale} path="/rti" t={t} title={t["rti.heading"]} intro={t["rti.intro"]} />;
 }

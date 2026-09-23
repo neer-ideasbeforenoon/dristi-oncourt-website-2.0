@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { navLink } from "@/components/chrome/styles";
 import type { Locale } from "@/lib/i18n/config";
 import { FOOTER_NAV } from "@/lib/navigation";
@@ -24,9 +22,9 @@ export function SiteFooter({
           <ul className="flex flex-wrap gap-1">
             {FOOTER_NAV.map((item) => (
               <li key={item.href}>
-                <Link href={`/${locale}${item.href}`} className={`${navLink} hover:bg-accent`}>
+                <a href={`/${locale}${item.href}`} className={`${navLink} hover:bg-accent`}>
                   {t[item.key]}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>

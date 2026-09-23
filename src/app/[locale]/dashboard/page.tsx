@@ -21,6 +21,6 @@ export default async function DashboardPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { t } = await readPage(params);
-  return <PageMain title={t["dashboard.heading"]} intro={t["dashboard.intro"]} />;
+  const { locale, t } = await readPage(params);
+  return <PageMain locale={locale} path="/dashboard" t={t} title={t["dashboard.heading"]} intro={t["dashboard.intro"]} />;
 }

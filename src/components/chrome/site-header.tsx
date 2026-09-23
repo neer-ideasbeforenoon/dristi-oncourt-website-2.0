@@ -1,96 +1,71 @@
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
 import { focusRing, navLink } from "@/components/chrome/styles";
-import { isLocale, type Locale } from "@/lib/i18n/config";
-import { helplineHref, loginHref } from "@/lib/site";
-
-export type NavItem = { href: string; label: string };
-
-export type LocaleChoice = {
-  code: Locale;
-  label: string;
-  hrefLang: string;
-};
+import { HTML_LANG, LOCALE_LABEL, LOCALES, type Locale } from "@/lib/i18n/config";
+import type { Messages } from "@/lib/i18n/messages";
+import { PRIMARY_NAV } from "@/lib/navigation";
+import { helplineHref, loginHref, site } from "@/lib/site";
 
 /**
  * Identity, language, helpline, and the service navigation.
- * The current path is read here so a language switch keeps the page the reader
- * is on, and so the current item can be marked. Copy arrives as props from the
- * server layout; this file holds no sentences of its own.
+ *
+ * Server-rendered on purpose. The current path is an argument from the page,
+ * so a language switch keeps that page and the current item can be marked,
+ * without a client component. A client header put every route over the
+ * JavaScript budget.
  */
 export function SiteHeader({
   locale,
-  name,
-  tagline,
-  navLabel,
-  languageLabel,
-  helplineLabel,
-  helpline,
-  items,
-  locales,
+  path,
+  t,
 }: {
   locale: Locale;
-  name: string;
-  tagline: string;
-  navLabel: string;
-  languageLabel: string;
-  helplineLabel: string;
-  helpline: string | null;
-  items: readonly NavItem[];
-  locales: readonly LocaleChoice[];
+  /** Path after the locale, "" on the homepage. */
+  path: string;
+  t: Messages;
 }) {
-  const pathname = usePathname() ?? `/${locale}`;
-  const phone = helplineHref(helpline);
+  const phone = helplineHref(site.helpline);
   const signIn = loginHref(locale);
 
   function withLocale(next: Locale): string {
-    const parts = pathname.split("/");
-    if (isLocale(parts[1] ?? "")) {
-      parts[1] = next;
-      const nextPath = parts.join("/");
-      return nextPath === "" ? `/${next}` : nextPath;
-    }
-    return `/${next}`;
+    return path ? `/${next}${path}` : `/${next}`;
   }
 
   return (
     <header className="border-border bg-background border-b">
       <div className="border-border border-b">
         <div className="mx-auto flex w-full max-w-[var(--portal-content-max)] flex-wrap items-center justify-end gap-2 px-4 py-2">
-          {phone && helpline ? (
+          {phone && site.helpline ? (
             <a href={phone} className={navLink}>
-              {helplineLabel}
-              <span className="text-muted-foreground ms-2">{helpline}</span>
+              {t["home.helpline.heading"]}
+              <span className="text-muted-foreground ms-2">{site.helpline}</span>
             </a>
           ) : null}
-          <nav aria-label={languageLabel} className="flex flex-wrap items-center gap-1">
-            {locales.map((choice) => {
-              const current = choice.code === locale;
+          <nav aria-label={t["lang.switch"]} className="flex flex-wrap items-center gap-1">
+            {LOCALES.map((code) => {
+              const current = code === locale;
+              const label = LOCALE_LABEL[code];
+              const hrefLang = HTML_LANG[code];
               if (current) {
                 return (
                   <span
-                    key={choice.code}
+                    key={code}
                     aria-current="true"
-                    lang={choice.hrefLang}
+                    lang={hrefLang}
                     className="bg-accent-strong inline-flex h-10 items-center rounded-lg px-3 text-body-compact font-medium"
                   >
-                    {choice.label}
+                    {label}
                   </span>
                 );
               }
               return (
-                <Link
-                  key={choice.code}
-                  href={withLocale(choice.code)}
-                  hrefLang={choice.hrefLang}
-                  lang={choice.hrefLang}
+                <a
+                  key={code}
+                  href={withLocale(code)}
+                  hrefLang={hrefLang}
+                  lang={hrefLang}
                   className={`${navLink} hover:bg-accent`}
                 >
-                  {choice.label}
-                </Link>
+                  {label}
+                </a>
               );
             })}
           </nav>
@@ -99,20 +74,20 @@ export function SiteHeader({
 
       <div className="mx-auto flex w-full max-w-[var(--portal-content-max)] flex-col gap-4 px-4 py-4">
         <div className="max-w-[var(--portal-measure)]">
-          <Link
+          <a
             href={`/${locale}`}
             className={`inline-flex h-10 items-center rounded-lg text-title-s font-semibold ${focusRing}`}
           >
-            {name}
-          </Link>
-          <p className="text-body text-muted-foreground mt-1">{tagline}</p>
+            {t["site.name"]}
+          </a>
+          <p className="text-body text-muted-foreground mt-1">{t["site.tagline"]}</p>
         </div>
-        <nav aria-label={navLabel}>
+        <nav aria-label={t["nav.primary"]}>
           <ul className="flex flex-wrap gap-1">
-            {items.map((item) => {
+            {PRIMARY_NAV.map((item) => {
               const external = item.href === "/login" && signIn.external;
               const href = item.href === "/login" ? signIn.href : `/${locale}${item.href}`;
-              const current = !external && pathname === href;
+              const current = !external && path === item.href;
               const className = current
                 ? `${navLink} bg-accent-strong`
                 : `${navLink} hover:bg-accent`;
@@ -120,12 +95,12 @@ export function SiteHeader({
                 <li key={item.href}>
                   {external ? (
                     <a href={href} className={className}>
-                      {item.label}
+                      {t[item.key]}
                     </a>
                   ) : (
-                    <Link href={href} aria-current={current ? "page" : undefined} className={className}>
-                      {item.label}
-                    </Link>
+                    <a href={href} aria-current={current ? "page" : undefined} className={className}>
+                      {t[item.key]}
+                    </a>
                   )}
                 </li>
               );

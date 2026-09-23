@@ -21,6 +21,6 @@ export default async function LoginPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { t } = await readPage(params);
-  return <PageMain title={t["login.heading"]} intro={t["login.intro"]} />;
+  const { locale, t } = await readPage(params);
+  return <PageMain locale={locale} path="/login" t={t} title={t["login.heading"]} intro={t["login.intro"]} />;
 }

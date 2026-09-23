@@ -2,13 +2,8 @@ import type { Metadata } from "next";
 import { Noto_Sans_Malayalam } from "next/font/google";
 import { notFound } from "next/navigation";
 
-import { SiteFooter } from "@/components/chrome/site-footer";
-import { SiteHeader } from "@/components/chrome/site-header";
-import { SkipLink } from "@/components/chrome/skip-link";
-import { DEFAULT_LOCALE, HTML_LANG, LOCALE_LABEL, LOCALES, isLocale } from "@/lib/i18n/config";
+import { DEFAULT_LOCALE, HTML_LANG, LOCALES, isLocale } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
-import { PRIMARY_NAV } from "@/lib/navigation";
-import { site } from "@/lib/site";
 
 /**
  * Locale layout: the only place `<html lang>` is set. The pass-through at
@@ -64,30 +59,9 @@ export default async function RootLayout({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const t = getMessages(locale);
-
   return (
     <html lang={HTML_LANG[locale]} className={notoMalayalam.variable}>
-      <body className="bg-background text-foreground flex min-h-screen flex-col font-sans antialiased">
-        <SkipLink label={t["nav.skip"]} />
-        <SiteHeader
-          locale={locale}
-          name={t["site.name"]}
-          tagline={t["site.tagline"]}
-          navLabel={t["nav.primary"]}
-          languageLabel={t["lang.switch"]}
-          helplineLabel={t["home.helpline.heading"]}
-          helpline={site.helpline}
-          items={PRIMARY_NAV.map((item) => ({ href: item.href, label: t[item.key] }))}
-          locales={LOCALES.map((code) => ({
-            code,
-            label: LOCALE_LABEL[code],
-            hrefLang: HTML_LANG[code],
-          }))}
-        />
-        <div className="flex-1">{children}</div>
-        <SiteFooter locale={locale} t={t} helpline={site.helpline} />
-      </body>
+      <body className="bg-background text-foreground font-sans antialiased">{children}</body>
     </html>
   );
 }

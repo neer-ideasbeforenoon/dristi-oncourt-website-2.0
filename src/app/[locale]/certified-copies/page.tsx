@@ -21,6 +21,6 @@ export default async function CertifiedCopiesPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { t } = await readPage(params);
-  return <PageMain title={t["copies.heading"]} intro={t["copies.intro"]} />;
+  const { locale, t } = await readPage(params);
+  return <PageMain locale={locale} path="/certified-copies" t={t} title={t["copies.heading"]} intro={t["copies.intro"]} />;
 }

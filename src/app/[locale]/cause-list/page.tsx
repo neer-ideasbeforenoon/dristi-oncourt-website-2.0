@@ -21,6 +21,6 @@ export default async function CauseListPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { t } = await readPage(params);
-  return <PageMain title={t["causeList.heading"]} intro={t["causeList.intro"]} />;
+  const { locale, t } = await readPage(params);
+  return <PageMain locale={locale} path="/cause-list" t={t} title={t["causeList.heading"]} intro={t["causeList.intro"]} />;
 }

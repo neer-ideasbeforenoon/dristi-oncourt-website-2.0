@@ -21,6 +21,6 @@ export default async function AboutPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { t } = await readPage(params);
-  return <PageMain title={t["about.heading"]} intro={t["about.intro"]} />;
+  const { locale, t } = await readPage(params);
+  return <PageMain locale={locale} path="/about" t={t} title={t["about.heading"]} intro={t["about.intro"]} />;
 }

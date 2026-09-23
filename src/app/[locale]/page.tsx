@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
+import { SiteChrome } from "@/components/chrome/site-chrome";
 import { primaryAction, secondaryAction, textAction } from "@/components/chrome/styles";
 import { readPage } from "@/lib/page";
 import { helplineHref, loginHref, site } from "@/lib/site";
@@ -33,6 +33,7 @@ export default async function Page({
   const phone = helplineHref(site.helpline);
 
   return (
+    <SiteChrome locale={locale} path="" t={t}>
     <main
       id="main"
       className="mx-auto flex w-full max-w-[var(--portal-content-max)] flex-col gap-12 px-4 py-8"
@@ -46,9 +47,9 @@ export default async function Page({
             {t["home.heading"]}
           </h1>
           <p className="text-body mt-4 max-w-[var(--portal-measure)]">{t["home.intro"]}</p>
-          <Link href={`/${locale}/cause-list`} className={`${secondaryAction} mt-6`}>
+          <a href={`/${locale}/cause-list`} className={`${secondaryAction} mt-6`}>
             {t["home.causeList.action"]}
-          </Link>
+          </a>
         </section>
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -65,9 +66,9 @@ export default async function Page({
                 {t["home.login.action"]}
               </a>
             ) : (
-              <Link href={signIn.href} className={`${primaryAction} self-start`}>
+              <a href={signIn.href} className={`${primaryAction} self-start`}>
                 {t["home.login.action"]}
-              </Link>
+              </a>
             )}
           </section>
 
@@ -79,9 +80,9 @@ export default async function Page({
               {t["nav.caseSearch"]}
             </h2>
             <p className="text-body max-w-[var(--portal-measure)]">{t["home.search.body"]}</p>
-            <Link href={`/${locale}/search`} className={`${secondaryAction} self-start`}>
+            <a href={`/${locale}/search`} className={`${secondaryAction} self-start`}>
               {t["home.search.action"]}
-            </Link>
+            </a>
           </section>
         </div>
 
@@ -107,9 +108,9 @@ export default async function Page({
             {t["home.dashboard.heading"]}
           </h2>
           <p className="text-body text-muted-foreground mt-4">{t["home.dashboard.body"]}</p>
-          <Link href={`/${locale}/dashboard`} className={`${textAction} mt-2`}>
+          <a href={`/${locale}/dashboard`} className={`${textAction} mt-2`}>
             {t["home.dashboard.action"]}
-          </Link>
+          </a>
         </section>
 
         <section aria-labelledby="home-highlights" className="max-w-[var(--portal-measure)]">
@@ -131,9 +132,9 @@ export default async function Page({
             {t["home.about.heading"]}
           </h2>
           <p className="text-body text-muted-foreground mt-4">{t["home.about.body"]}</p>
-          <Link href={`/${locale}/about`} className={`${textAction} mt-2`}>
+          <a href={`/${locale}/about`} className={`${textAction} mt-2`}>
             {t["home.about.action"]}
-          </Link>
+          </a>
         </section>
 
         <section aria-labelledby="home-faq" className="max-w-[var(--portal-measure)]">
@@ -141,11 +142,12 @@ export default async function Page({
             {t["home.faq.heading"]}
           </h2>
           <p className="text-body text-muted-foreground mt-4">{t["home.faq.body"]}</p>
-          <Link href={`/${locale}/help`} className={`${textAction} mt-2`}>
+          <a href={`/${locale}/help`} className={`${textAction} mt-2`}>
             {t["home.faq.action"]}
-          </Link>
+          </a>
         </section>
       </div>
     </main>
+    </SiteChrome>
   );
 }
