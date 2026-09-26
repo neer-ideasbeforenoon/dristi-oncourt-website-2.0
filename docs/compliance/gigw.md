@@ -60,7 +60,7 @@ Everything below needs a page, a decision, or a person, and none exists yet.
 - [ ] Language switcher in the page chrome (the routing exists; the control does not)
 - [ ] "Last updated" stamp on every content page
 - [ ] State emblem / Kerala judiciary lockup, used per the emblem rules
-- [ ] Skip-to-content link (the `<main id="main">` target exists; the link does not)
+- [x] Skip-to-content link: first focusable element in `src/components/chrome/site-header.tsx`, targets `<main id="main">`, in both languages
 
 ### Mandated policy pages (§5.4.3)
 Seven, per the review pass against the lifecycle-management page. Re-confirm the exact

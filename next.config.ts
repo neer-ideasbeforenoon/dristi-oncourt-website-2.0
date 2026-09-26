@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    // Default stays 75. 90 is for the court-data portrait, so the optimizer does not
+    // soften the only pixels that portrait has.
+    qualities: [75, 90],
+  },
   /**
    * Next 16 blocks its own dev resources when the page is reached from a host it does
    * not consider the dev origin — including `127.0.0.1`. The block is silent in the

@@ -41,6 +41,22 @@
    * cause lists are allowed to be wider than prose.
    */
   --portal-content-max: 72rem;
+
+  /*
+   * Home hero: fades the photo into the page behind the text column. Solid for the
+   * first 4.5rem, which the text overlaps, then eased rather than linear so the photo
+   * has no visible edge.
+   */
+  --portal-hero-scrim: linear-gradient(
+    to right,
+    var(--surface-raised) 4.5rem,
+    color-mix(in oklab, var(--surface-raised) 90%, transparent) 7rem,
+    color-mix(in oklab, var(--surface-raised) 70%, transparent) 10rem,
+    color-mix(in oklab, var(--surface-raised) 45%, transparent) 13.5rem,
+    color-mix(in oklab, var(--surface-raised) 22%, transparent) 17rem,
+    color-mix(in oklab, var(--surface-raised) 8%, transparent) 20rem,
+    transparent 23rem
+  );
 }
 
 /*

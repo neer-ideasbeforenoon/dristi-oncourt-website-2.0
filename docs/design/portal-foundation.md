@@ -54,7 +54,7 @@ utilities.
 |---|---|
 | Headings | Georgia, then Times New Roman, Times, Noto Sans Malayalam, serif. Weight 500. |
 | Interface text | Inter, then Noto Sans Malayalam, then the DS Helvetica stack. |
-| Roles | `type-display`, `type-feature`, `type-services`, `type-section`, `type-card`, `type-lead`, `type-body`, `type-support`, `type-eyebrow`, `type-nav`, `type-action`, `type-caption`. |
+| Roles | `type-display`, `type-feature`, `type-services`, `type-section`, `type-card`, `type-lead`, `type-body`, `type-support`, `type-eyebrow`, `type-nav`, `type-action`, `type-caption`, and `type-figure` for dashboard numbers. |
 
 Fluid roles run from a 375px viewport to 1280px. The handoff specified the two sizes
 and not the slope.

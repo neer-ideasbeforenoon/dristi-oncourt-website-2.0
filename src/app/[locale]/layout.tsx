@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { portalFontVariables } from "@/app/fonts";
+import { SiteFooter } from "@/components/chrome/site-footer";
+import { SiteHeader } from "@/components/chrome/site-header";
 import { DEFAULT_LOCALE, HTML_LANG, LOCALES, isLocale } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
 
@@ -45,11 +47,14 @@ export default async function RootLayout({
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  const t = getMessages(locale);
 
   return (
     <html lang={HTML_LANG[locale]} className={portalFontVariables}>
       <body className="bg-background text-foreground font-sans antialiased">
+        <SiteHeader locale={locale} t={t} />
         {children}
+        <SiteFooter locale={locale} t={t} />
       </body>
     </html>
   );

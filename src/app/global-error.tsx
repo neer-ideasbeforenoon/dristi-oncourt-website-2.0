@@ -2,7 +2,7 @@
 
 import { portalFontVariables } from "@/app/fonts";
 import { DEFAULT_LOCALE, HTML_LANG } from "@/lib/i18n/config";
-import { getMessages } from "@/lib/i18n/messages";
+import t from "@/messages/error/en.json";
 
 import "./app.css";
 
@@ -10,9 +10,10 @@ import "./app.css";
  * Replaces the root layout when something throws above `[locale]`. Next requires
  * this file to define its own `<html>` and `<body>`, so language and content have
  * to live here, not in a parent.
+ *
+ * Like `[locale]/error.tsx`, it imports only the error catalogue, never the full one.
  */
 export default function GlobalError({ reset }: { error: Error; reset: () => void }) {
-  const t = getMessages(DEFAULT_LOCALE);
   return (
     <html lang={HTML_LANG[DEFAULT_LOCALE]} className={portalFontVariables}>
       <body className="bg-background text-foreground font-sans antialiased">

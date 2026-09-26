@@ -1,6 +1,6 @@
 /*
- * Portal type. Georgia for headings, Inter for interface text, and the twelve
- * roles from the ON Courts handoff.
+ * Portal type. Georgia for headings, Inter for interface text, the twelve
+ * roles from the ON Courts handoff, and type-figure for dashboard numbers.
  *
  * This file does not edit the pinned design system. globals.css stays
  * byte-identical, so colour and components still match the Dristi app. These
@@ -126,6 +126,23 @@ html,
   font-size: 0.78rem;
   font-weight: 400;
   line-height: 1.5;
+}
+
+/* Same size as a caption, on the loaded Inter 700 face. Inter has no 500 or 600. */
+.type-caption.type-strong {
+  font-weight: 700;
+}
+
+/*
+ * Dashboard figures. Fluid, 32–38px. Homepage v3 sets metric values in Inter Bold,
+ * not Georgia, because Georgia's old-style numerals read poorly as data.
+ */
+.type-figure {
+  font-family: var(--portal-font-ui);
+  font-size: clamp(2rem, 1.8446rem + 0.663vw, 2.375rem);
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
 }
 
 :root[lang^="ml"] :is(.type-display, .type-feature, .type-services, .type-section, .type-card) {

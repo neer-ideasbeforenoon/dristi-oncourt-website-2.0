@@ -25,37 +25,64 @@ const MESSAGES = join(ROOT, "src/messages");
 const UI_PRIMITIVES = join(SRC, "components", "ui") + sep;
 const ALLOW = "i18n-allow";
 
-const catalogues = Object.fromEntries(
-  readdirSync(MESSAGES)
-    .filter((f) => f.endsWith(".json"))
-    .map((f) => [f.replace(/\.json$/, ""), JSON.parse(readFileSync(join(MESSAGES, f), "utf8"))])
-);
-
-const locales = Object.keys(catalogues);
-const problems = [];
-
-/* Rule 1 — key parity across every catalogue. */
-const base = locales[0];
-const baseKeys = new Set(Object.keys(catalogues[base]));
-for (const locale of locales.slice(1)) {
-  const keys = new Set(Object.keys(catalogues[locale]));
-  for (const k of baseKeys) {
-    if (!keys.has(k)) problems.push(`src/messages/${locale}.json  missing key "${k}" (present in ${base})`);
-  }
-  for (const k of keys) {
-    if (!baseKeys.has(k)) problems.push(`src/messages/${base}.json  missing key "${k}" (present in ${locale})`);
-  }
+function loadCatalogues(dir) {
+  return Object.fromEntries(
+    readdirSync(dir)
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => [f.replace(/\.json$/, ""), JSON.parse(readFileSync(join(dir, f), "utf8"))])
+  );
 }
 
-/* Also catch a key that exists but was never translated away from English. */
-for (const locale of locales.slice(1)) {
-  for (const k of baseKeys) {
-    const a = catalogues[base][k];
-    const b = catalogues[locale][k];
-    if (typeof a === "string" && a === b && /[a-zA-Z]{4}/.test(a)) {
-      problems.push(`src/messages/${locale}.json  "${k}" is still the ${base} string — untranslated`);
+const catalogues = loadCatalogues(MESSAGES);
+const locales = Object.keys(catalogues);
+const base = locales[0];
+const problems = [];
+
+/*
+ * Sub-catalogues: a directory under src/messages/ holding one file per locale, for
+ * client components that must not import the full catalogue (it ships to the browser).
+ * They obey the same rules as the main catalogue.
+ */
+const subCatalogues = readdirSync(MESSAGES)
+  .filter((entry) => statSync(join(MESSAGES, entry)).isDirectory())
+  .map((entry) => ({ prefix: `src/messages/${entry}/`, files: loadCatalogues(join(MESSAGES, entry)) }));
+
+/** Every key a component may legitimately ask for. */
+const knownKeys = new Set(Object.keys(catalogues[base]));
+
+function checkCatalogueSet(prefix, set) {
+  for (const locale of locales) {
+    if (!set[locale]) problems.push(`${prefix}${locale}.json  missing — every catalogue needs every locale`);
+  }
+  const baseCatalogue = set[base] ?? {};
+  const baseKeys = new Set(Object.keys(baseCatalogue));
+
+  /* Rule 1 — key parity across every catalogue. */
+  for (const locale of locales.slice(1)) {
+    if (!set[locale]) continue;
+    const keys = new Set(Object.keys(set[locale]));
+    for (const k of baseKeys) {
+      if (!keys.has(k)) problems.push(`${prefix}${locale}.json  missing key "${k}" (present in ${base})`);
+    }
+    for (const k of keys) {
+      if (!baseKeys.has(k)) problems.push(`${prefix}${base}.json  missing key "${k}" (present in ${locale})`);
+    }
+
+    /* Also catch a key that exists but was never translated away from English. */
+    for (const k of baseKeys) {
+      const a = baseCatalogue[k];
+      const b = set[locale][k];
+      if (typeof a === "string" && a === b && /[a-zA-Z]{4}/.test(a)) {
+        problems.push(`${prefix}${locale}.json  "${k}" is still the ${base} string — untranslated`);
+      }
     }
   }
+  return baseKeys;
+}
+
+checkCatalogueSet("src/messages/", catalogues);
+for (const { prefix, files } of subCatalogues) {
+  for (const k of checkCatalogueSet(prefix, files)) knownKeys.add(k);
 }
 
 function sourceFiles(dir) {
@@ -77,8 +104,8 @@ for (const file of sourceFiles(SRC)) {
   const lines = source.split("\n");
 
   for (const [, key] of source.matchAll(USED_KEY)) {
-    if (!baseKeys.has(key)) {
-      problems.push(`${rel}  uses key "${key}", which is not in src/messages/${base}.json`);
+    if (!knownKeys.has(key)) {
+      problems.push(`${rel}  uses key "${key}", which is not in any src/messages/ catalogue`);
     }
   }
 
@@ -104,5 +131,5 @@ if (problems.length) {
 }
 
 console.log(
-  `i18n check passed (${baseKeys.size} keys x ${locales.length} locales: ${locales.join(", ")}).`
+  `i18n check passed (${knownKeys.size} keys x ${locales.length} locales: ${locales.join(", ")}; ${subCatalogues.length} sub-catalogue${subCatalogues.length === 1 ? "" : "s"}).`
 );

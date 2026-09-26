@@ -102,6 +102,10 @@ type utilities in product screens. The fluid roles interpolate from 375px to 128
 This does not move the pin. `globals.css` and the primitives stay byte-identical, so
 colour and components still match the Dristi app. The app does not read this file.
 
+Homepage v3 added a thirteenth role, `type-figure`, for dashboard numbers (Inter Bold,
+fluid 32–38px, tabular figures). No handoff role covered them, and Georgia's old-style
+numerals read poorly as data. Added 2026-09-26.
+
 Malayalam is a fallback inside both stacks. Noto Sans Malayalam covers glyphs Georgia
 and Inter do not have, at weights 400, 500, 700, and 800. Heading line height is 1.35
 when `lang` starts with `ml`, because the handoff's 1.04 to 1.14 clips Indic type.
