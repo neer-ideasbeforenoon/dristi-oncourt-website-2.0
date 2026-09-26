@@ -163,7 +163,7 @@ export default async function Page({
         </div>
       </section>
 
-      <section aria-labelledby="about-heading" className="bg-surface-raised pb-16">
+      <section aria-labelledby="about-heading" className="bg-background py-16">
         <div className={CONTAINER}>
           <div className="grid gap-8 rounded-3xl bg-brand-muted p-4 sm:p-6 lg:grid-cols-[9fr_11fr] lg:gap-12">
             <div className="flex flex-col justify-between gap-8 p-2 sm:p-4 lg:py-6">

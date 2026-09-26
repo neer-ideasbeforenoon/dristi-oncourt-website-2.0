@@ -1,3 +1,5 @@
+import { ChevronDown } from "lucide-react";
+
 import logo from "@/assets/home/logo.png";
 import { MobileNav } from "@/components/chrome/mobile-nav";
 import { focusRing } from "@/components/portal/focus";
@@ -69,7 +71,10 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Messages }) {
             links={links}
           />
           <Button asChild size="lg" className="type-action">
-            <a href={href(locale, "login")}>{t["nav.login"]}</a>
+            <a href={href(locale, "login")}>
+              {t["nav.login"]}
+              <ChevronDown aria-hidden data-icon="inline-end" />
+            </a>
           </Button>
         </div>
       </div>
