@@ -1,31 +1,46 @@
 #!/usr/bin/env node
 /**
- * Enforce Pucar typography roles in product composition.
+ * Enforce the portal type roles in product composition.
  *
- * Synced DS primitives are intentionally excluded: compact control chrome uses
- * Tailwind's text-sm/text-xs internally. Product screens must use the named DS
- * scale so those implementation details do not leak into citizen-facing copy.
+ * Product screens use the classes in src/app/oncourts-typography.css (Georgia
+ * headings, Inter for interface text). Synced DS primitives are excluded: their
+ * control chrome still uses the pinned scale internally.
  */
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 import { APP_ROOT } from "./resolve-ds.mjs";
 
 const SRC = join(APP_ROOT, "src");
 const UI_PRIMITIVES = join(SRC, "components", "ui") + sep;
+const TYPE_CSS = join(SRC, "app", "oncourts-typography.css");
+const FONTS = join(SRC, "app", "fonts.ts");
 const ALLOW = "ds-typography-allow";
-const RAW_TYPE_SIZE =
-  /\btext-(?:xs|sm|base|lg|xl|[2-9]xl|\[[^\]]+\])(?![\w-])/g;
-const HEADING_TYPE =
-  /\btext-(?:display(?:-s)?|title(?:-l|-s)?)\b/;
+const RAW_TYPE_SIZE = /\btext-(?:xs|sm|base|lg|xl|[2-9]xl|\[[^\]]+\])(?![\w-])/g;
+const DS_TYPE_ROLE =
+  /\btext-(?:display(?:-s)?|title(?:-l|-s)?|body(?:-compact)?|caption)(?![\w-])/g;
+const ROLES = [
+  "display",
+  "feature",
+  "services",
+  "section",
+  "card",
+  "lead",
+  "body",
+  "support",
+  "eyebrow",
+  "nav",
+  "action",
+  "caption",
+];
+const NOTO_WEIGHTS = ["400", "500", "700", "800"];
+const INTER_WEIGHTS = ["400", "700", "800"];
 
 function sourceFiles(dir) {
   return readdirSync(dir).flatMap((entry) => {
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) return sourceFiles(full);
-    return entry.endsWith(".tsx") && !full.startsWith(UI_PRIMITIVES)
-      ? [full]
-      : [];
+    return entry.endsWith(".tsx") && !full.startsWith(UI_PRIMITIVES) ? [full] : [];
   });
 }
 
@@ -42,31 +57,83 @@ for (const file of sourceFiles(SRC)) {
       findings.push({
         file: relative(APP_ROOT, file),
         line: index + 1,
-        rule: "use a named DS type token in product composition",
+        rule: "use a portal type role in product composition",
         match: match[0],
       });
     }
 
-    if (HEADING_TYPE.test(line) && !line.includes("font-semibold")) {
+    for (const match of line.matchAll(DS_TYPE_ROLE)) {
       findings.push({
         file: relative(APP_ROOT, file),
         line: index + 1,
-        rule: "DS display/title styles require font-semibold",
-        match: line.match(HEADING_TYPE)?.[0] ?? "heading token",
+        rule: "product screens use portal type roles, not the DS type scale",
+        match: match[0],
       });
     }
   });
+}
 
-  if (
-    source.includes("Noto_Sans_Malayalam") &&
-    !/[\"']600[\"']/.test(source)
-  ) {
+if (!existsSync(TYPE_CSS)) {
+  findings.push({
+    file: relative(APP_ROOT, TYPE_CSS),
+    line: 1,
+    rule: "portal type stylesheet is missing",
+    match: "oncourts-typography.css",
+  });
+} else {
+  const css = readFileSync(TYPE_CSS, "utf8");
+  for (const role of ROLES) {
+    if (!css.includes(`.type-${role}`)) {
+      findings.push({
+        file: relative(APP_ROOT, TYPE_CSS),
+        line: 1,
+        rule: "portal type role is missing",
+        match: `.type-${role}`,
+      });
+    }
+  }
+  if (!css.includes("Georgia")) {
     findings.push({
-      file: relative(APP_ROOT, file),
-      line: lines.findIndex((line) => line.includes("weight:")) + 1,
-      rule: "Malayalam font loading must include the DS title weight",
-      match: "missing weight 600",
+      file: relative(APP_ROOT, TYPE_CSS),
+      line: 1,
+      rule: "headings must use Georgia",
+      match: "missing Georgia",
     });
+  }
+}
+
+if (!existsSync(FONTS)) {
+  findings.push({
+    file: relative(APP_ROOT, FONTS),
+    line: 1,
+    rule: "portal font loader is missing",
+    match: "fonts.ts",
+  });
+} else {
+  const fonts = readFileSync(FONTS, "utf8");
+  const interAt = fonts.indexOf("Inter({");
+  const notoAt = fonts.indexOf("Noto_Sans_Malayalam({");
+  const inter = interAt === -1 ? "" : fonts.slice(interAt, notoAt === -1 ? undefined : notoAt);
+  const noto = notoAt === -1 ? "" : fonts.slice(notoAt);
+  for (const weight of NOTO_WEIGHTS) {
+    if (!noto.includes(`"${weight}"`)) {
+      findings.push({
+        file: relative(APP_ROOT, FONTS),
+        line: 1,
+        rule: "Malayalam font loading must include the portal role weights",
+        match: `missing weight ${weight}`,
+      });
+    }
+  }
+  for (const weight of INTER_WEIGHTS) {
+    if (!inter.includes(`"${weight}"`)) {
+      findings.push({
+        file: relative(APP_ROOT, FONTS),
+        line: 1,
+        rule: "Inter must include the interface weights",
+        match: `missing weight ${weight}`,
+      });
+    }
   }
 }
 
@@ -78,12 +145,10 @@ if (findings.length) {
     );
   }
   console.error(
-    "\nUse text-body for citizen copy, text-title-* + font-semibold for headings. " +
-      `Keep ${ALLOW} for reviewed exceptions only.`
+    "\nUse type-body for citizen copy and type-display, type-section, and the other " +
+      `roles in src/app/oncourts-typography.css for headings. Keep ${ALLOW} for reviewed exceptions only.`
   );
   process.exit(1);
 }
 
-console.log(
-  "Typography check passed (named DS roles used outside synced primitives)."
-);
+console.log("Typography check passed (portal type roles used outside synced primitives).");

@@ -45,7 +45,7 @@ conformance is a floor.
 | `check:meta` | `<html lang>` set server-side, per locale |
 | `check:i18n` | multilingual parity between English and Malayalam |
 | `check:ssr` | content present without JavaScript; one `<main>` landmark per page |
-| `check:typography` | named type roles, Malayalam weight 600 |
+| `check:typography` | portal type roles, Malayalam weights 400, 500, 700, 800 |
 | `check:portal-tokens` / `check:tokens` | contrast-tested DS tokens, no ad-hoc colour |
 
 ## Not started

@@ -4,20 +4,21 @@ What this repo adds on top of the design system, and why each thing is not just 
 token.
 
 The DS was tuned for dense, authenticated case screens: tables, forms, filing flows. A
-public portal is mostly prose, notices and lookup. That is a real difference, and it is
-the only thing the local layer is allowed to encode.
+public portal is mostly prose, notices and lookup. Reading measure and the portal type
+system are the local layer. Colour and components stay on the pin.
 
 ## The mechanism
 
 `src/app/app.css` is the only stylesheet the app imports:
 
 ```css
-@import "./globals.css";      /* the DS, synced, byte-identical */
-@import "./portal-tokens.css"; /* this repo, --portal-* only */
+@import "./globals.css";             /* the DS, synced, byte-identical */
+@import "./portal-tokens.css";       /* this repo, --portal-* only */
+@import "./oncourts-typography.css"; /* portal type, imported last */
 ```
 
 Order matters and the split matters. Keeping them in separate files is what lets the
-first stay verifiably untouched while the second grows. Importing `globals.css` directly
+first stay verifiably untouched while the local files grow. Importing `globals.css` directly
 from the layout would work today and quietly invite someone to add one variable to it.
 
 `portal-tokens.css` may contain **custom-property declarations and nothing else**. No
@@ -44,22 +45,27 @@ DS-owned names, the `--portal-*` namespace, nothing but custom properties.
 That is deliberately short. Every addition is a claim that the DS is missing something,
 and most of the time the honest answer is that a DS semantic token already exists.
 
-## The one sanctioned redefinition
+## Portal type
 
-Malayalam. There is no dependable Malayalam system font across Windows, Android and
-macOS, so the DS's zero-download stack has nothing to fall back to for half this
-portal's readers. DS `ACCESSIBILITY.md` §13 delegates non-Latin script coverage to the
-consuming app, so this is the DS's own instruction, not an exception to it.
+Decision D9. Product screens use `src/app/oncourts-typography.css`, not the DS type
+utilities.
 
-`next/font` loads Noto Sans Malayalam at weights 400 and 600 in the root layout. 600 is
-not optional: the DS title roles are `font-semibold`, and a family without a real 600
-gets synthesised or snapped to bold. `check-typography` enforces that weight.
+| | |
+|---|---|
+| Headings | Georgia, then Times New Roman, Times, Noto Sans Malayalam, serif. Weight 500. |
+| Interface text | Inter, then Noto Sans Malayalam, then the DS Helvetica stack. |
+| Roles | `type-display`, `type-feature`, `type-services`, `type-section`, `type-card`, `type-lead`, `type-body`, `type-support`, `type-eyebrow`, `type-nav`, `type-action`, `type-caption`. |
 
-The override is scoped to `[lang^="ml"]` and carries a `portal-tokens-allow` marker, so
-English pages keep the DS stack byte for byte.
+Fluid roles run from a 375px viewport to 1280px. The handoff specified the two sizes
+and not the slope.
 
-**This does not license a second exception.** Anything else goes to
-[ds-requests.md](ds-requests.md) first.
+`next/font` loads Inter at 400, 700, and 800, and Noto Sans Malayalam at 400, 500, 700,
+and 800. Georgia is a system face. Malayalam glyphs fall through to Noto in both stacks.
+Heading line height is 1.35 when `lang` starts with `ml`. `check-typography` enforces
+the roles and those weights.
+
+Colour, spacing, and primitives stay on the pin. This file does not license a second
+kind of fork. Anything else still goes to [ds-requests.md](ds-requests.md) first.
 
 ## What the layer will need next, and does not have yet
 

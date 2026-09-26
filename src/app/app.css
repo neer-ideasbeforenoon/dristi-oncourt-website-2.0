@@ -1,19 +1,23 @@
 /*
  * The stylesheet the app actually imports.
  *
- * Two lines, and the order is the whole point:
+ * Three lines, and the order is the whole point:
  *
  *   globals.css      the design system, synced byte-for-byte from the pinned DS.
  *                    check:ui-sync fails if a single character differs, so nothing
  *                    local can ever be written into it.
  *   portal-tokens.css  this repo's own additions, --portal-* only, enforced by
  *                    check:portal-tokens.
+ *   oncourts-typography.css  portal type: Georgia headings, Inter for interface
+ *                    text, the twelve type-* roles. Imported last so it wins
+ *                    over the design-system font stack. See decisions.md D9.
  *
  * Keeping them in separate files is what lets the first one stay verifiably untouched
- * while the second one is free to grow. Importing globals.css directly from layout.tsx
+ * while the others are free to grow. Importing globals.css directly from layout.tsx
  * would work today and quietly invite someone to "just add one variable" to it.
  *
- * Do not add anything else to this file.
+ * Do not add a fourth import.
  */
 @import "./globals.css";
 @import "./portal-tokens.css";
+@import "./oncourts-typography.css";

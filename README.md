@@ -115,6 +115,7 @@ build-dependent gate, people stop running gates.
 | [`docs/ds/`](docs/ds/README.md) | verbatim copy of the pinned design-system rules |
 | `src/app/globals.css` | design-system tokens, synced, never hand-edited |
 | `src/app/portal-tokens.css` | this repo's own tokens, `--portal-*` only |
+| `src/app/oncourts-typography.css` | portal type: Georgia headings, Inter for interface text |
 | `src/components/ui/` | design-system components, synced, never hand-edited |
 | `src/components/portal/`, `chrome/` | this repo's own composition |
 | `src/messages/` | every user-facing string, in both languages |

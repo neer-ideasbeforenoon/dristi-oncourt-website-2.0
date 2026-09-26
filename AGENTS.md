@@ -21,6 +21,7 @@ The DS reaches this repo as **committed files**, synced from a **pinned commit**
 | `src/lib/utils.ts` | DS helper | **No.** |
 | `docs/ds/*` | Verbatim copy of the DS rule documents | **No.** `check:ds-docs` hashes every file. |
 | `src/app/portal-tokens.css` | This repo's own tokens | Yes, additively. See §3. |
+| `src/app/oncourts-typography.css` | Portal type: Georgia headings, Inter UI, twelve roles | Yes. See §3. |
 | `src/components/portal/`, `src/components/chrome/` | This repo's composition | Yes. |
 
 ```bash
@@ -66,18 +67,28 @@ So:
 No `@theme`, no `@apply`, no ordinary CSS properties. A second stylesheet cannot register
 Tailwind theme tokens anyway, so an `@theme` block there would be silently dead.
 
-`src/app/app.css` imports `globals.css` then `portal-tokens.css`, in that order, and is
-the only stylesheet the app imports. Do not add a third line to it.
+`src/app/app.css` imports three stylesheets, in order, and is the only stylesheet
+the app imports. Do not add a fourth.
+
+1. `globals.css`, the pinned design system.
+2. `portal-tokens.css`, `--portal-*` only.
+3. `oncourts-typography.css`, the portal type system.
 
 The portal **defines no brand colour**. `--primary` resolves to `#007e7e` in light and
 `#0eb39e` in dark, from the pinned DS, exactly as the Dristi app gets it. Writing that
 hex into a component is a token-gate failure; the DS README uses `bg-[#007e7e]` as its
 own example of what not to do.
 
-One redefinition is sanctioned, and only one: extending `--font-sans` for Malayalam,
-scoped to `[lang^="ml"]`, because DS `ACCESSIBILITY.md` §13 delegates non-Latin script
-coverage to the consuming app. It carries a `portal-tokens-allow` marker. Do not add a
-second exception without a DS request first.
+Type is the one place this portal does not follow the pin. Decision D9: Georgia for
+headings, Inter for interface text, and the twelve `type-*` roles in
+`oncourts-typography.css`. Product screens use those classes. `check:typography` rejects
+the DS type utilities (`text-body`, `text-title-*`) and raw Tailwind sizes in product
+code. Synced primitives still use the DS scale internally.
+
+Malayalam stays in both stacks. Georgia and Inter do not cover the script, so Noto Sans
+Malayalam is the per-glyph fallback, loaded at 400, 500, 700, and 800. Heading line
+heights loosen to 1.35 under `[lang^="ml"]`, because the handoff's 1.04 to 1.14 clips
+Indic type. Latin pages keep the handoff line heights.
 
 ## 4. Two languages, always in step
 

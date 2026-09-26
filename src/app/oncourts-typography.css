@@ -1,0 +1,133 @@
+/*
+ * Portal type. Georgia for headings, Inter for interface text, and the twelve
+ * roles from the ON Courts handoff.
+ *
+ * This file does not edit the pinned design system. globals.css stays
+ * byte-identical, so colour and components still match the Dristi app. These
+ * rules are unlayered and imported last, so they win over the design system's
+ * font-sans utility.
+ *
+ * Fluid roles scale between a 375px and a 1280px viewport. The handoff gave
+ * the two ends and not the slope. That range is the assumption.
+ *
+ * Malayalam: Georgia and Inter do not cover the script, so Noto Sans Malayalam
+ * sits in both stacks and is selected per glyph. The handoff line heights of
+ * 1.04 to 1.14 clip Indic headings, so under [lang^="ml"] those roles use 1.35.
+ * Latin pages keep the handoff line heights.
+ */
+
+:root {
+  --portal-font-ui: var(--portal-font-inter, "Helvetica Neue"),
+    var(--portal-font-malayalam, "Noto Sans Malayalam"), "Helvetica Neue", Helvetica, Arial,
+    system-ui, sans-serif;
+  --portal-font-heading: Georgia, "Times New Roman", Times, var(--portal-font-malayalam, "Noto Sans Malayalam"),
+    serif;
+}
+
+html,
+.font-sans {
+  font-family: var(--portal-font-ui);
+}
+
+.type-display,
+.type-feature,
+.type-services,
+.type-section,
+.type-card {
+  font-family: var(--portal-font-heading);
+  font-weight: 500;
+}
+
+.type-lead,
+.type-body,
+.type-support,
+.type-eyebrow,
+.type-nav,
+.type-action,
+.type-caption {
+  font-family: var(--portal-font-ui);
+}
+
+/* Hero heading. Fluid, 42.4–71.2px. */
+.type-display {
+  font-size: clamp(2.65rem, 1.9041rem + 3.1823vw, 4.45rem);
+  line-height: 1.04;
+}
+
+/* Cause list heading. Fluid, 39.2–56px. */
+.type-feature {
+  font-size: clamp(2.45rem, 2.0149rem + 1.8564vw, 3.5rem);
+  line-height: 1.06;
+}
+
+/* Services heading. Fluid, 32–44.8px. */
+.type-services {
+  font-size: clamp(2rem, 1.6685rem + 1.4144vw, 2.8rem);
+  line-height: 1.14;
+}
+
+/* Other section headings. Fluid, 32–42.4px. */
+.type-section {
+  font-size: clamp(2rem, 1.7307rem + 1.1492vw, 2.65rem);
+  line-height: 1.14;
+}
+
+/* Service-card headings. Fluid, 28–36px. */
+.type-card {
+  font-size: clamp(1.75rem, 1.5428rem + 0.884vw, 2.25rem);
+  line-height: 1.13;
+}
+
+/* Introductory copy. Fluid, 16–17.6px. */
+.type-lead {
+  font-size: clamp(1rem, 0.9586rem + 0.1768vw, 1.1rem);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Body copy. 16px. */
+.type-body {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Supporting copy. 14.4px. */
+.type-support {
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Uppercase labels. 12px. */
+.type-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+/* Navigation. 14.24px. */
+.type-nav {
+  font-size: 0.89rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* Buttons. 16px. */
+.type-action {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Captions. 12.48px. */
+.type-caption {
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+:root[lang^="ml"] :is(.type-display, .type-feature, .type-services, .type-section, .type-card) {
+  line-height: 1.35;
+}

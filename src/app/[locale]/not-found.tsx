@@ -12,8 +12,8 @@ export default function NotFound() {
       id="main"
       className="mx-auto w-full px-4 py-12 max-w-[var(--portal-content-max)]"
     >
-      <h1 className="text-title-l font-semibold">{t["notFound.title"]}</h1>
-      <p className="text-body text-muted-foreground mt-4 max-w-[var(--portal-measure)]">
+      <h1 className="type-section">{t["notFound.title"]}</h1>
+      <p className="type-body text-muted-foreground mt-4 max-w-[var(--portal-measure)]">
         {t["notFound.body"]}
       </p>
     </main>

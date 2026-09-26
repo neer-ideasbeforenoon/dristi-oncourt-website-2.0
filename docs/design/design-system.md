@@ -52,7 +52,8 @@ the files leaves the repo claiming a version it is not on.
 | | |
 |---|---|
 | `src/app/portal-tokens.css` | `--portal-*` additions only. See [portal-foundation.md](portal-foundation.md). |
-| `src/app/app.css` | two imports, in order. Nothing else. |
+| `src/app/oncourts-typography.css` | Portal type. Georgia, Inter, and the `type-*` roles. See [portal-foundation.md](portal-foundation.md). |
+| `src/app/app.css` | three imports, in order. Nothing else. |
 | `src/components/portal/` | portal-specific composition built from DS primitives |
 | `src/components/chrome/` | header, footer, language switcher |
 | `src/messages/` | all user-facing copy |

@@ -37,8 +37,8 @@ export default async function Page({
       id="main"
       className="mx-auto w-full px-4 py-12 max-w-[var(--portal-content-max)]"
     >
-      <h1 className="text-title-l font-semibold">{t["home.heading"]}</h1>
-      <p className="text-body text-muted-foreground mt-4 max-w-[var(--portal-measure)]">
+      <h1 className="type-display">{t["home.heading"]}</h1>
+      <p className="type-lead text-muted-foreground mt-4 max-w-[var(--portal-measure)]">
         {t["home.intro"]}
       </p>
     </main>

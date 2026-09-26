@@ -90,6 +90,22 @@ and the `agent-rails.yml` workflow.
 
 Splitting them is what unblocked Malayalam without waiting on a DS release.
 
+The "do not change the face locally" half is superseded by D9. Malayalam coverage still
+ships in this repo, now inside the portal type stacks.
+
+## D9 — Portal type is Georgia and Inter  ·  settled 2026-09-26
+
+The public site uses its own type, in `src/app/oncourts-typography.css`. Headings are
+Georgia at weight 500. Interface text is Inter. Twelve `type-*` roles replace the DS
+type utilities in product screens. The fluid roles interpolate from 375px to 1280px.
+
+This does not move the pin. `globals.css` and the primitives stay byte-identical, so
+colour and components still match the Dristi app. The app does not read this file.
+
+Malayalam is a fallback inside both stacks. Noto Sans Malayalam covers glyphs Georgia
+and Inter do not have, at weights 400, 500, 700, and 800. Heading line height is 1.35
+when `lang` starts with `ml`, because the handoff's 1.04 to 1.14 clips Indic type.
+
 ## D8 — `docs/ds/` is a verbatim mirror, never a summary  ·  settled 2026-09-21
 
 `vendor/pucar-design-system` is gitignored, so on a fresh clone the rules an agent is

@@ -44,21 +44,6 @@
 }
 
 /*
- * Malayalam script coverage.
- *
- * This is the ONE sanctioned redefinition of a design-system token in this repo, and it
- * is sanctioned by the design system itself: DS ACCESSIBILITY.md section 13 delegates
- * non-Latin script coverage to the consuming app. There is no dependable Malayalam
- * system font across Windows, Android and macOS, so the DS's zero-download stack simply
- * has nothing to fall back to for half this portal's readers.
- *
- * Scoped to `[lang^="ml"]`, so English pages keep the DS stack untouched, byte for byte.
- * The variable is produced by next/font in the root layout.
- *
- * This does NOT license a second exception. Anything else you want to override belongs
- * in docs/design/ds-requests.md.
+ * Type does not live here. Georgia, Inter, and the type-* roles are in
+ * oncourts-typography.css. See docs/decisions.md D9.
  */
-/* portal-tokens-allow */
-:root[lang^="ml"] {
-  --font-sans: var(--portal-font-malayalam), "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
-}

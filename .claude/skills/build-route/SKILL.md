@@ -47,8 +47,9 @@ Every page needs:
 - content rendered directly, never behind a client fetch. If the data comes from
   eGov/DIGIT, fetch it in the server component so it lands in the HTML.
 
-Use DS type roles (`text-body`, `text-title-*` with `font-semibold`), not raw Tailwind
-sizes. Use `var(--portal-measure)` for prose width.
+Use portal type roles (`type-body`, `type-lead`, `type-display`, and the other classes
+in `src/app/oncourts-typography.css`). Do not use the DS type utilities or raw Tailwind
+sizes in product screens. Use `var(--portal-measure)` for prose width.
 
 ## 4. Components
 
