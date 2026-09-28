@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import type { CourtDate } from "@/lib/dates";
 
 /**
- * The homepage's lead service. Sits on the brand canvas, which is identical in light
- * and dark, so its action is pinned to the canvas pair rather than the themed card.
+ * The homepage's lead service. Sits on the brand primary, so its action is pinned
+ * to the primary pair rather than the themed card.
  */
 export function CauseListCard({
   image,
@@ -25,7 +25,7 @@ export function CauseListCard({
   actionHref: string;
 }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl bg-brand-canvas text-brand-canvas-foreground shadow-raised">
+    <article className="flex flex-col overflow-hidden rounded-2xl bg-primary text-primary-foreground shadow-raised">
       <div className="relative h-54 shrink-0">
         <Photo
           src={image}
@@ -41,12 +41,12 @@ export function CauseListCard({
             <time dateTime={date.iso}>{date.label}</time>
           </p>
           <h3 className="type-feature">{heading}</h3>
-          <p className="type-body max-w-md text-brand-canvas-muted-foreground">{body}</p>
+          <p className="type-body max-w-md text-primary-foreground">{body}</p>
         </div>
         <Button
           asChild
           size="lg"
-          className="type-action self-start bg-brand-canvas-foreground text-brand-canvas hover:bg-brand-canvas-muted-foreground focus-visible:ring-brand-canvas-foreground"
+          className="type-action self-start bg-primary-foreground text-primary hover:bg-accent focus-visible:ring-primary-foreground"
         >
           <a href={actionHref}>{actionLabel}</a>
         </Button>

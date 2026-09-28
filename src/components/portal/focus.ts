@@ -1,6 +1,6 @@
-/** The DS Button's focus treatment, for links that are not buttons. */
+/** The DS focus halo, for links that are not buttons. */
 export const focusRing =
-  "rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+  "rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-focus-ring";
 
 /** The same ring on the brand canvas, where the default ring colour disappears. */
 export const focusRingOnCanvas =

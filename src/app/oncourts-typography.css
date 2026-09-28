@@ -128,11 +128,6 @@ html,
   line-height: 1.5;
 }
 
-/* Same size as a caption, on the loaded Inter 700 face. Inter has no 500 or 600. */
-.type-caption.type-strong {
-  font-weight: 700;
-}
-
 /*
  * Dashboard figures. Fluid, 32–38px. Homepage v3 sets metric values in Inter Bold,
  * not Georgia, because Georgia's old-style numerals read poorly as data.
@@ -145,6 +140,6 @@ html,
   font-variant-numeric: tabular-nums;
 }
 
-:root[lang^="ml"] :is(.type-display, .type-feature, .type-services, .type-section, .type-card) {
+:root[lang^="ml"] :is(.type-display, .type-feature, .type-services, .type-section, .type-card, .type-figure) {
   line-height: 1.35;
 }

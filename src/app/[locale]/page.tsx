@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
 import { Clock3, FileText, Landmark, MapPin, Search } from "lucide-react";
 
-import causeListPhoto from "@/assets/home/cause-list.png";
-import certifiedCopiesPhoto from "@/assets/home/certified-copies.png";
-import courtAccessPhoto from "@/assets/home/court-access.png";
+import causeListPhoto from "@/assets/home/cause-list.jpg";
+import certifiedCopiesPhoto from "@/assets/home/certified-copies.jpg";
 import courtDataPhoto from "@/assets/home/court-data.jpg";
-import courthousePhoto from "@/assets/home/courthouse.png";
-import findCasePhoto from "@/assets/home/find-case.png";
-import heroIllustration from "@/assets/home/hero.png";
-import { ArrowLink } from "@/components/portal/arrow-link";
+import findCasePhoto from "@/assets/home/find-case.jpg";
+import heroIllustration from "@/assets/home/hero.jpg";
 import { CauseListCard } from "@/components/portal/cause-list-card";
 import { CourtDataSnapshot } from "@/components/portal/court-data-snapshot";
 import { Photo } from "@/components/portal/photo";
@@ -67,7 +64,7 @@ export default async function Page({
             <p className="type-lead text-muted-foreground">{t["home.intro"]}</p>
             <ul aria-label={t["home.principles.label"]} className="flex flex-wrap gap-x-4 gap-y-2 pt-2">
               {principles.map(({ icon: Icon, label }) => (
-                <li key={label} className="type-caption type-strong flex items-center gap-2 text-foreground">
+                <li key={label} className="type-caption flex items-center gap-2 text-foreground">
                   <Icon aria-hidden className="size-4 text-primary" />
                   {label}
                 </li>
@@ -137,7 +134,7 @@ export default async function Page({
         <div className={`${CONTAINER} flex gap-12 py-16`}>
           <div aria-hidden className="relative hidden w-85 shrink-0 overflow-hidden rounded-3xl lg:block">
             <Photo src={courtDataPhoto} alt="" fill sizes="340px" quality={90} className="object-cover" />
-            <div className="absolute bottom-6 left-6 flex w-65 flex-col gap-1.5 rounded-xl bg-card/90 p-4">
+            <div className="absolute bottom-6 left-6 flex w-65 flex-col gap-1.5 rounded-xl border border-hairline bg-card p-4 shadow-raised">
               <p className="type-eyebrow text-primary">{t["home.data.eyebrow"]}</p>
               <p className="type-lead text-foreground">{t["home.data.photoLabel"]}</p>
             </div>
@@ -162,39 +159,6 @@ export default async function Page({
           </div>
         </div>
       </section>
-
-      <section aria-labelledby="about-heading" className="bg-background py-16">
-        <div className={CONTAINER}>
-          <div className="grid gap-8 rounded-3xl bg-brand-muted p-4 sm:p-6 lg:grid-cols-[9fr_11fr] lg:gap-12">
-            <div className="flex flex-col justify-between gap-8 p-2 sm:p-4 lg:py-6">
-              <div className="flex flex-col gap-4">
-                <p className="type-eyebrow text-brand-muted-foreground">{t["home.about.eyebrow"]}</p>
-                <h2 id="about-heading" className="type-section text-foreground">
-                  {t["home.about.heading"]}
-                </h2>
-                <p className="type-body text-muted-foreground">{t["home.about.body1"]}</p>
-                <p className="type-body text-muted-foreground">{t["home.about.body2"]}</p>
-              </div>
-              <ArrowLink href={href(locale, "about")} className="text-foreground">
-                {t["home.about.action"]}
-              </ArrowLink>
-            </div>
-            <div className="relative min-h-72 overflow-hidden rounded-2xl lg:min-h-[27rem]">
-              <Photo
-                src={courtAccessPhoto}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 34rem, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="relative h-[clamp(14rem,38vw,34rem)] overflow-hidden">
-        <Photo src={courthousePhoto} alt="" fill sizes="100vw" className="object-cover object-top" />
-      </div>
     </main>
   );
 }

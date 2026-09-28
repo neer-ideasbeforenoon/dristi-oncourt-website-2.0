@@ -22,9 +22,9 @@ export function CourtDataSnapshot({
   const { filed, disposed, hearingGapDays } = snapshot;
   const busiest = Math.max(...filed.byQuarter.map((q) => q.count));
   const outcomes = [
-    { label: t["home.data.disposed.withdrawn"], share: `${disposed.withdrawn}%`, width: disposed.withdrawn, tone: "bg-primary" },
-    { label: t["home.data.disposed.dismissed"], share: `${disposed.dismissed}%`, width: disposed.dismissed, tone: "bg-primary/55" },
-    { label: t["home.data.disposed.other"], share: `≈${disposed.other}%`, width: disposed.other, tone: "bg-primary/15" },
+    { label: t["home.data.disposed.withdrawn"], share: `${disposed.withdrawn}%`, width: disposed.withdrawn, tone: "bg-chart-1" },
+    { label: t["home.data.disposed.dismissed"], share: `${disposed.dismissed}%`, width: disposed.dismissed, tone: "bg-chart-2" },
+    { label: t["home.data.disposed.other"], share: `≈${disposed.other}%`, width: disposed.other, tone: "bg-chart-3" },
   ];
   const gap = `${number.format(hearingGapDays)} ${t["home.data.gap.unit"]}`;
 
@@ -43,7 +43,7 @@ export function CourtDataSnapshot({
               <span className="font-bold text-foreground">{number.format(quarter.count)}</span>
               <span
                 aria-hidden
-                className={cn("rounded-xs", quarter.toDate ? "bg-primary" : "bg-primary/40")}
+                className={cn("rounded-xs", quarter.toDate ? "bg-chart-1" : "bg-track")}
                 style={{ height: `${(quarter.count / busiest) * 3}rem` }}
               />
               <span className="whitespace-nowrap text-muted-foreground">{quarter.label}</span>
@@ -88,9 +88,9 @@ export function CourtDataSnapshot({
         chartTitle={t["home.data.gap.chart"]}
       >
         <div aria-hidden className="relative flex items-center justify-between">
-          <span className="absolute inset-x-1 h-0.5 bg-primary/55" />
-          <span className="relative size-3 rounded-full border-3 border-primary bg-card" />
-          <span className="relative size-3 rounded-full border-3 border-primary bg-card" />
+          <span className="absolute inset-x-1 h-0.5 bg-brand-accent" />
+          <span className="relative size-3 rounded-full border-3 border-chart-1 bg-card" />
+          <span className="relative size-3 rounded-full border-3 border-chart-1 bg-card" />
         </div>
         <p className="type-caption flex justify-between gap-2 text-muted-foreground">
           <span>{t["home.data.gap.first"]}</span>

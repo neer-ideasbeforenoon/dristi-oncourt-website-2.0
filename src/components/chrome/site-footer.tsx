@@ -99,7 +99,7 @@ export function SiteFooter({ locale, t }: { locale: Locale; t: Messages }) {
             </nav>
           ))}
         </div>
-        <div className="type-caption border-t border-brand-canvas-foreground/20 pt-6 text-brand-canvas-muted-foreground">
+        <div className="type-caption border-t border-brand-canvas pt-6 text-brand-canvas-muted-foreground">
           <p>
             {t["footer.copyright"]}{" "}
             <time dateTime={updated.iso}>{updated.label}</time>

@@ -31,14 +31,6 @@ export function ServiceCard({
         <Photo src={image} alt="" fill sizes="176px" className="object-cover" />
       </div>
       <div className="flex flex-1 flex-col justify-between gap-4 overflow-hidden p-6">
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -top-28 -right-14 size-44 rounded-full border border-hairline"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -top-26 -right-11 size-40 rounded-full border border-hairline"
-        />
         <div className="flex flex-col gap-2">
           <span className="flex size-9 items-center justify-center rounded-md bg-brand-muted text-brand-muted-foreground">
             <Icon aria-hidden className="size-4.5" />

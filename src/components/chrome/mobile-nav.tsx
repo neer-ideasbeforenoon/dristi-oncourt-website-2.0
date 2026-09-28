@@ -17,7 +17,7 @@ export function MobileNav({
   closeLabel: string;
   title: string;
   navLabel: string;
-  links: { href: string; label: string }[];
+  links: { href: string; label: string; active?: boolean }[];
 }) {
   return (
     <details className="group md:hidden">
@@ -42,8 +42,10 @@ export function MobileNav({
             <li key={link.href}>
               <a
                 href={link.href}
+                aria-current={link.active ? "page" : undefined}
                 className={cn(
                   "type-nav flex min-h-12 items-center rounded-lg px-3 text-foreground hover:bg-accent",
+                  link.active && "bg-accent text-primary",
                   focusRing
                 )}
               >
