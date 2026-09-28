@@ -127,7 +127,7 @@ export default async function Page({
         </div>
       </section>
 
-      <section aria-label={t["about.glance.label"]} className="bg-background py-6 lg:py-8">
+      <section aria-label={t["about.glance.label"]} className="py-6 lg:py-8">
         <ul className={`${CONTAINER} grid divide-y divide-hairline sm:grid-cols-3 sm:divide-x sm:divide-y-0`}>
           {glance.map((item) => (
             <li key={item.value} className="flex flex-col gap-2 py-8 sm:px-8 sm:first:pl-0 sm:last:pr-0">
@@ -138,7 +138,7 @@ export default async function Page({
         </ul>
       </section>
 
-      <section id="vision" aria-labelledby="vision-heading" className="scroll-mt-16 bg-background">
+      <section id="vision" aria-labelledby="vision-heading" className="scroll-mt-16">
         <div className={`${CONTAINER} grid grid-cols-1 items-center gap-12 pt-6 pb-16 lg:grid-cols-[11fr_9fr] lg:gap-16 lg:pt-8 lg:pb-24`}>
           <div className="flex flex-col gap-4">
             <p className="type-eyebrow text-primary">{t["about.vision.eyebrow"]}</p>
@@ -216,7 +216,7 @@ export default async function Page({
         </div>
       </section>
 
-      <section id="experience" aria-labelledby="experience-heading" className="scroll-mt-16 bg-background">
+      <section id="experience" aria-labelledby="experience-heading" className="scroll-mt-16">
         <div className={`${CONTAINER} grid grid-cols-1 gap-12 py-16 lg:grid-cols-[2fr_3fr] lg:gap-16 lg:py-24`}>
           <SectionIntro
             id="experience-heading"

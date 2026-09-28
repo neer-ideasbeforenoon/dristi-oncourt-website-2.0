@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import type { DashboardSnapshot } from "@/lib/dashboard-snapshot";
 import { HTML_LANG, type Locale } from "@/lib/i18n/config";
+import { fill } from "@/lib/i18n/fill";
 import type { Messages } from "@/lib/i18n/messages";
 import { cn } from "@/lib/utils";
 
@@ -19,12 +20,23 @@ export function CourtDataSnapshot({
   t: Messages;
 }) {
   const number = new Intl.NumberFormat(HTML_LANG[locale]);
-  const { filed, disposed, hearingGapDays } = snapshot;
-  const busiest = Math.max(...filed.byQuarter.map((q) => q.count));
+  const { totals } = snapshot;
+  const hearingGapDays = snapshot.timing.daysBetweenHearings;
+  const byQuarter = snapshot.quarters.slice(-4).map((q) => ({
+    key: `${q.year}-${q.quarter}`,
+    label: `${fill(t["home.data.quarterLabel"], { quarter: q.quarter, yy: String(q.year).slice(-2) })}${q.partial ? "*" : ""}`,
+    count: q.filed,
+    toDate: q.partial,
+  }));
+  const busiest = Math.max(...byQuarter.map((q) => q.count));
+  const shareOf = (id: string) => snapshot.outcomes.find((o) => o.id === id)?.share ?? 0;
+  const withdrawn = shareOf("withdrawn");
+  const dismissed = shareOf("dismissed");
+  const other = 100 - withdrawn - dismissed;
   const outcomes = [
-    { label: t["home.data.disposed.withdrawn"], share: `${disposed.withdrawn}%`, width: disposed.withdrawn, tone: "bg-chart-1" },
-    { label: t["home.data.disposed.dismissed"], share: `${disposed.dismissed}%`, width: disposed.dismissed, tone: "bg-chart-2" },
-    { label: t["home.data.disposed.other"], share: `≈${disposed.other}%`, width: disposed.other, tone: "bg-chart-3" },
+    { label: t["home.data.disposed.withdrawn"], share: `${withdrawn}%`, width: withdrawn, tone: "bg-chart-1" },
+    { label: t["home.data.disposed.dismissed"], share: `${dismissed}%`, width: dismissed, tone: "bg-chart-2" },
+    { label: t["home.data.disposed.other"], share: `≈${other}%`, width: other, tone: "bg-chart-3" },
   ];
   const gap = `${number.format(hearingGapDays)} ${t["home.data.gap.unit"]}`;
 
@@ -33,13 +45,13 @@ export function CourtDataSnapshot({
       <MetricCard
         index="01"
         label={t["home.data.filed.label"]}
-        value={number.format(filed.total)}
+        value={number.format(totals.filed)}
         caption={t["home.data.filed.caption"]}
         chartTitle={t["home.data.filed.chart"]}
       >
         <ol className="grid grid-cols-4 items-end gap-2">
-          {filed.byQuarter.map((quarter) => (
-            <li key={quarter.label} className="type-caption flex flex-col gap-1">
+          {byQuarter.map((quarter) => (
+            <li key={quarter.key} className="type-caption flex flex-col gap-1">
               <span className="font-bold text-foreground">{number.format(quarter.count)}</span>
               <span
                 aria-hidden
@@ -55,7 +67,7 @@ export function CourtDataSnapshot({
       <MetricCard
         index="02"
         label={t["home.data.disposed.label"]}
-        value={number.format(disposed.total)}
+        value={number.format(totals.disposed)}
         caption={t["home.data.disposed.caption"]}
         chartTitle={t["home.data.disposed.chart"]}
       >

@@ -30,7 +30,7 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Messages }) {
   }));
 
   return (
-    <header className="relative border-b border-hairline bg-background">
+    <header className="relative border-b border-hairline bg-card">
       <a
         href="#main"
         className="type-action sr-only rounded-lg bg-primary px-4 py-3 text-primary-foreground focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50"

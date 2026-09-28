@@ -1,4 +1,28 @@
+import os from "node:os";
 import type { NextConfig } from "next";
+
+/**
+ * Hosts that may load the dev server's own scripts.
+ *
+ * Next 16 blocks those resources for any other host. The block is silent in the
+ * browser: `/_next` 403s, the client runtime never boots, and the page sits there
+ * with no console error. Only the server log says why.
+ *
+ * Loopback covers `localhost`, `127.0.0.1`, and `[::1]`, because some systems
+ * resolve `localhost` to IPv6 first. The LAN addresses are whatever this machine has
+ * right now, because `next dev` prints that URL and opening it is otherwise the
+ * same silent failure. Dev only; production ignores this list.
+ */
+function devOrigins(): string[] {
+  const hosts = new Set<string>(["localhost", "127.0.0.1", "::1", "[::1]"]);
+  for (const list of Object.values(os.networkInterfaces())) {
+    for (const net of list ?? []) {
+      if (net.internal || net.family !== "IPv4") continue;
+      hosts.add(net.address);
+    }
+  }
+  return [...hosts];
+}
 
 const nextConfig: NextConfig = {
   images: {
@@ -6,15 +30,7 @@ const nextConfig: NextConfig = {
     // soften the only pixels that portrait has.
     qualities: [75, 90],
   },
-  /**
-   * Next 16 blocks its own dev resources when the page is reached from a host it does
-   * not consider the dev origin — including `127.0.0.1`. The block is silent in the
-   * browser: `/_next/webpack-hmr` 403s, the client runtime never boots, and the page
-   * sits there with no console error to explain it. Only the server log says why.
-   *
-   * Both loopback names, so either URL works and the trap is closed.
-   */
-  allowedDevOrigins: ["127.0.0.1", "localhost"],
+  allowedDevOrigins: devOrigins(),
 
   /**
    * There is deliberately no `output: "export"` here.

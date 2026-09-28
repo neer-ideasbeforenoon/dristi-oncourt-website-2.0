@@ -91,7 +91,7 @@ export default async function Page({
         </div>
       </section>
 
-      <section id="services" aria-labelledby="services-heading" className="scroll-mt-4 bg-background">
+      <section id="services" aria-labelledby="services-heading" className="scroll-mt-4">
         <div className={`${CONTAINER} flex flex-col gap-8 py-16`}>
           <div className="flex max-w-3xl flex-col gap-3">
             <h2 id="services-heading" className="type-services text-foreground">

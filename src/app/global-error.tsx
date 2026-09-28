@@ -16,7 +16,7 @@ import "./app.css";
 export default function GlobalError({ reset }: { error: Error; reset: () => void }) {
   return (
     <html lang={HTML_LANG[DEFAULT_LOCALE]} className={portalFontVariables}>
-      <body className="bg-background text-foreground font-sans antialiased">
+      <body className="bg-surface-raised text-foreground font-sans antialiased">
         <main
           id="main"
           className="mx-auto w-full px-4 py-12 max-w-[var(--portal-content-max)]"

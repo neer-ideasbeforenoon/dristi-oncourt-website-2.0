@@ -10,6 +10,7 @@ const PATHS = {
   services: "/services",
   about: "/about",
   dashboard: "/dashboard",
+  dashboardCsv: "/dashboard/snapshot.csv",
   support: "/support",
   login: "/login",
   causeList: "/live-causelist",

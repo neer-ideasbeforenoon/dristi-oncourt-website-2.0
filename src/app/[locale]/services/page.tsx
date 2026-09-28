@@ -67,7 +67,7 @@ export default async function Page({
         </div>
       </section>
 
-      <section aria-labelledby="choose-heading" className="bg-background">
+      <section aria-labelledby="choose-heading">
         <div className={`${CONTAINER} flex flex-col gap-7 pt-10 pb-16 lg:pb-20`}>
           <div className="flex flex-col gap-2">
             <p className="type-eyebrow text-primary">{t["services.choose.eyebrow"]}</p>

@@ -51,7 +51,8 @@ export default async function RootLayout({
 
   return (
     <html lang={HTML_LANG[locale]} className={portalFontVariables}>
-      <body className="bg-background text-foreground font-sans antialiased">
+      {/* Warm canvas for the whole page. Sections inherit it; white cards and teal bands sit on top. */}
+      <body className="bg-surface-raised text-foreground font-sans antialiased">
         <SiteHeader locale={locale} t={t} />
         {children}
         <SiteFooter locale={locale} t={t} />

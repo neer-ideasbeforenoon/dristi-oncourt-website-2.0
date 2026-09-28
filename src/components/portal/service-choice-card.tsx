@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 type Action = { label: string; href: string };
 
 /**
- * One numbered choice on the services page. Resting, it matches the light cards.
+ * One numbered choice on the services page. Resting, it is a white card on the beige canvas.
  * Hover and keyboard focus fill it with the brand primary. With a single action,
  * that action's `::after` covers the card, so the whole card is one click target.
  * With two, each link stands alone, because a stretched link would swallow the other.
@@ -34,7 +34,7 @@ export function ServiceChoiceCard({
   return (
     <article
       className={cn(
-        "group relative flex w-full flex-col overflow-hidden rounded-2xl border border-hairline bg-surface-raised text-foreground transition-[color,background-color,border-color,box-shadow] duration-200",
+        "group relative flex w-full flex-col overflow-hidden rounded-2xl border border-hairline bg-card text-foreground transition-[color,background-color,border-color,box-shadow] duration-200",
         "hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-overlay",
         "focus-within:border-primary focus-within:bg-primary focus-within:text-primary-foreground focus-within:shadow-overlay"
       )}

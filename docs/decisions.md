@@ -106,6 +106,11 @@ Homepage v3 added a thirteenth role, `type-figure`, for dashboard numbers (Inter
 fluid 32–38px, tabular figures). No handoff role covered them, and Georgia's old-style
 numerals read poorly as data. Added 2026-09-26.
 
+The dashboard (v5 handoff) added two more, 2026-09-28. `type-panel` is Georgia 500 at
+fluid 22.4–25.6px, for panel and dialog headings: the handoff sets them at 25px, and
+`type-card` (up to 36px) crowds a half-width panel. `type-figure-s` is Inter Bold
+tabular at fluid 20–26px, for figures that sit beside or under a `type-figure`.
+
 Malayalam is a fallback inside both stacks. Noto Sans Malayalam covers glyphs Georgia
 and Inter do not have, at weights 400, 500, 700, and 800. Heading line height is 1.35
 when `lang` starts with `ml`, because the handoff's 1.04 to 1.14 clips Indic type.

@@ -1,4 +1,6 @@
-import { focusRingOnCanvas } from "@/components/portal/focus";
+import logo from "@/assets/home/logo.png";
+import { focusRing } from "@/components/portal/focus";
+import { Photo } from "@/components/portal/photo";
 import { footerUpdatedOn } from "@/lib/dates";
 import type { Locale } from "@/lib/i18n/config";
 import type { Messages } from "@/lib/i18n/messages";
@@ -65,11 +67,18 @@ export function SiteFooter({ locale, t }: { locale: Locale; t: Messages }) {
   const updated = footerUpdatedOn();
 
   return (
-    <footer className="bg-brand-canvas-deep text-brand-canvas-foreground">
+    // `.dark` pins the DS dark neutral ramp (background is neutral-1). The page stays light.
+    <footer className="dark bg-background text-foreground">
       <div className="mx-auto flex max-w-[var(--portal-content-max)] flex-col gap-12 px-4 pt-12 pb-6 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-[minmax(10rem,14rem)_repeat(4,minmax(0,1fr))] xl:gap-10">
           <div className="sm:col-span-2 xl:col-span-1">
-            <p className="type-card">{t["footer.name"]}</p>
+            <Photo
+              src={logo}
+              alt={t["footer.name"]}
+              width={224}
+              height={81}
+              className="h-[81px] w-[224px] max-w-full object-contain object-left [filter:invert(1)_hue-rotate(180deg)]"
+            />
           </div>
           {COLUMNS.map((column) => (
             <nav key={column.id} aria-labelledby={column.id}>
@@ -85,8 +94,8 @@ export function SiteFooter({ locale, t }: { locale: Locale; t: Messages }) {
                         href={external ? link.href : href(locale, link.route)}
                         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                         className={cn(
-                          "type-support flex min-h-10 items-center text-brand-canvas-muted-foreground underline-offset-4 hover:text-brand-canvas-foreground hover:underline",
-                          focusRingOnCanvas
+                          "type-support flex min-h-10 items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline",
+                          focusRing
                         )}
                       >
                         {t[link.label]}
@@ -99,7 +108,7 @@ export function SiteFooter({ locale, t }: { locale: Locale; t: Messages }) {
             </nav>
           ))}
         </div>
-        <div className="type-caption border-t border-brand-canvas pt-6 text-brand-canvas-muted-foreground">
+        <div className="type-caption border-t border-border pt-6 text-muted-foreground">
           <p>
             {t["footer.copyright"]}{" "}
             <time dateTime={updated.iso}>{updated.label}</time>

@@ -34,7 +34,7 @@ export function MobileNav({
       </summary>
       <nav
         aria-label={navLabel}
-        className="absolute inset-x-0 top-full z-50 border-t border-hairline bg-background px-4 py-2 shadow-overlay"
+        className="absolute inset-x-0 top-full z-50 border-t border-hairline bg-card px-4 py-2 shadow-overlay"
       >
         <p className="type-action px-3 py-2">{title}</p>
         <ul className="flex flex-col">
